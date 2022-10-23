@@ -6,9 +6,9 @@ from telethon import TelegramClient, events
 
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
-api_id = 123456
-api_hash = "1233456789"
-bot_token = "token"
+api_id =  24278982 
+api_hash =  'fe89b75cc97edbe18b277d74aa95312e'
+bot_token = "5761838633:AAGqWDo2L5HsLAFTL8Q28t4V48Qdj29aKH8"
 
 bot = TelegramClient("bot", api_id, api_hash)
 

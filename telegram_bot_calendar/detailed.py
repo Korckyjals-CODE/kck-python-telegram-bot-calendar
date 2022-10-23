@@ -103,12 +103,15 @@ class DetailedTelegramCalendar(TelegramCalendar):
 
         days_buttons = rows(
             [
-                self._build_button(d.day if d else self.empty_day_button, SELECT if d else NOTHING, DAY, d,
+                self._build_button(self._edit_date("({0})", d.day) if d else self.empty_day_button, SELECT if d else NOTHING, DAY, d,
                                    is_random=self.is_random)
                 for d in days
             ],
             self.size_day
         )
+
+        '''for d in days:
+            print(self._edit_date("hola {0}", d.day))'''
 
         days_of_week_buttons = [[
             self._build_button(self.days_of_week[self.locale][i], NOTHING) for i in range(7)
@@ -121,6 +124,10 @@ class DetailedTelegramCalendar(TelegramCalendar):
                                               mind=min_date(start + relativedelta(days=days_num - 1), MONTH))
 
         self._keyboard = self._build_keyboard(days_of_week_buttons + days_buttons + nav_buttons)
+
+    def _edit_date(self, format, date): #funcion para editar el texto segun un formato
+        edited = format.format(str(date))
+        return edited
 
     def _build_nav_buttons(self, step, diff, mind, maxd, *args, **kwargs):
 
