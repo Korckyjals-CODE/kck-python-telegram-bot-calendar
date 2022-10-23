@@ -6,13 +6,13 @@ from telethon import TelegramClient, events
 
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
-api_id =  24278982 
-api_hash =  'fe89b75cc97edbe18b277d74aa95312e'
-bot_token = "5761838633:AAGqWDo2L5HsLAFTL8Q28t4V48Qdj29aKH8"
+api_id =  123456 
+api_hash =  'apihas'
+bot_token = "token"
 
 bot = TelegramClient("bot", api_id, api_hash)
-valid_dates = ['2022-08-11', '2022-07-11', '2022-08-15', '2022-08-03']
-edit_string = "(2){0} " 
+valid_dates = ['2022-08-11', '2022-07-11', '2022-08-15', '2022-08-03'] #List containing the dates to be affected
+edit_string = "(2){0} " #Format in which dates will be modified
 
 
 @bot.on(events.NewMessage(pattern="/start"))

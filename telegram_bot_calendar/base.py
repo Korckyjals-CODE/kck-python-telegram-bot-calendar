@@ -49,7 +49,7 @@ class TelegramCalendar:
     step = None
 
     def __init__(self, calendar_id=0, current_date=None, additional_buttons=None, locale='en', min_date=None,
-                 max_date=None, telethon=False, is_random=True, **kwargs):
+                 max_date=None, telethon=False, is_random=True, valid_dates=[], edit_string="", **kwargs):
         """
 
         :param date current_date: Where calendar starts, if None the current date is used
@@ -66,6 +66,9 @@ class TelegramCalendar:
 
         self.min_date = min_date
         self.max_date = max_date
+
+        self.valid_dates = valid_dates #Variable that adds dates we want to change
+        self.edit_string = edit_string #Variable that adds the string format to modify the dates
 
         self.telethon = telethon
         if self.telethon and not TELETHON_INSTALLED:

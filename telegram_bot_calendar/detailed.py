@@ -13,10 +13,14 @@ class DetailedTelegramCalendar(TelegramCalendar):
 
     def __init__(self, calendar_id=0, current_date=None, additional_buttons=None, locale='en',
                  min_date=None,
-                 max_date=None, telethon=False, **kwargs):
+                 max_date=None, telethon=False, 
+                 valid_dates=[], edit_string="", #Nuevas variables para el funcionamiento 
+                 **kwargs):
         super(DetailedTelegramCalendar, self).__init__(calendar_id, current_date=current_date,
                                                        additional_buttons=additional_buttons, locale=locale,
-                                                       min_date=min_date, max_date=max_date, is_random=False, telethon=telethon, **kwargs)
+                                                       min_date=min_date, max_date=max_date, is_random=False, telethon=telethon, 
+                                                       valid_dates=valid_dates, edit_string=edit_string, #Nuevas variables para el funcionamiento
+                                                       **kwargs)
 
     def _build(self, step=None, **kwargs):
         if not step:
@@ -103,7 +107,7 @@ class DetailedTelegramCalendar(TelegramCalendar):
 
         days_buttons = rows(
             [
-                self._build_button(self._edit_date("({0})", d.day) if d else self.empty_day_button, SELECT if d else NOTHING, DAY, d,
+                self._build_button(self._edit_date(self.edit_string, d, self.valid_dates) if d else self.empty_day_button, SELECT if d else NOTHING, DAY, d,
                                    is_random=self.is_random)
                 for d in days
             ],
@@ -125,8 +129,16 @@ class DetailedTelegramCalendar(TelegramCalendar):
 
         self._keyboard = self._build_keyboard(days_of_week_buttons + days_buttons + nav_buttons)
 
-    def _edit_date(self, format, date): #funcion para editar el texto segun un formato
-        edited = format.format(str(date))
+    def _edit_date(self, format, date, valid_dates): #Function to edit text according to a format
+        edited = ''
+        week_days = [1, 2, 3, 4, 5, 7, 8, 9]
+        if valid_dates.count(str(date)) == 1:
+            #print(valid_dates)
+            edited = format.format(str(date.day))   
+            if week_days.count(date.day) == 1: #date.day == 5:
+                edited = edited[:(len(edited) - 2)] + " " + edited[(len(edited) - 2):]
+        else:
+            edited = date.day
         return edited
 
     def _build_nav_buttons(self, step, diff, mind, maxd, *args, **kwargs):
