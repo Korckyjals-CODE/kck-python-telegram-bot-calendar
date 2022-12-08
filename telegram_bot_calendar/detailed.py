@@ -130,16 +130,19 @@ class DetailedTelegramCalendar(TelegramCalendar):
         self._keyboard = self._build_keyboard(days_of_week_buttons + days_buttons + nav_buttons)
 
     def _edit_date(self, format, date, valid_dates): #Function to edit text according to a format
-        edited = ''
-        week_days = [1, 2, 3, 4, 5, 7, 8, 9]
-        if valid_dates.count(str(date)) == 1:
-            #print(valid_dates)
-            edited = format.format(str(date.day))   
-            if week_days.count(date.day) == 1: #date.day == 5:
-                edited = edited[:(len(edited) - 2)] + " " + edited[(len(edited) - 2):]
+        if len(valid_dates) > 0:
+            edited = ''
+            week_days = [1, 2, 3, 4, 5, 7, 8, 9]
+            if valid_dates.count(str(date)) != 1:
+                #print(valid_dates)
+                edited = format.format(str(date.day))   
+                if week_days.count(date.day) == 1: #date.day == 5:
+                    edited = edited[:(len(edited) - 2)] + " " + edited[(len(edited) - 2):]
+            else:
+                edited = date.day
+            return edited
         else:
-            edited = date.day
-        return edited
+            return date.day
 
     def _build_nav_buttons(self, step, diff, mind, maxd, *args, **kwargs):
 
