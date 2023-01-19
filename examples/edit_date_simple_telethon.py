@@ -4,21 +4,20 @@ Example using telethon.
 
 from telethon import TelegramClient, events
 
-from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP, WMonthTelegramCalendar
+from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
-api_id =  24278982 
-api_hash =  'fe89b75cc97edbe18b277d74aa95312e'
-bot_token = "5702125509:AAEA5jr-g8HXPED1NFx_u_yp31LugT4WNU4"
+api_id =  123456 
+api_hash =  'apihas'
+bot_token = "token"
 
 bot = TelegramClient("bot", api_id, api_hash)
-#valid_dates = ['2022-12-11', '2022-12-12', '2022-12-15', '2022-12-23']
-valid_dates = []
-edit_string = "(2){0} " 
+valid_dates = ['2022-08-11', '2022-07-11', '2022-08-15', '2022-08-03'] #List containing the dates to be affected
+edit_string = "(2){0} " #Format in which dates will be modified
 
 
 @bot.on(events.NewMessage(pattern="/start"))
 async def reply_handler(event):
-    calendar, step = WMonthTelegramCalendar(telethon=True, valid_dates=valid_dates, edit_string=edit_string).build()
+    calendar, step = DetailedTelegramCalendar(telethon=True, valid_dates=valid_dates, edit_string=edit_string).build()
     await event.respond(f"Select {LSTEP[step]}", buttons=calendar)
 
 
